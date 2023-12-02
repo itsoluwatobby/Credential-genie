@@ -2,7 +2,7 @@
 
 ### Create and verify your Verifiable Credentials with ease
 
-> Techologies used
+> Technologies used
 * React
 * Tailwindcss
 * Web5 API
