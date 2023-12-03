@@ -1,33 +1,31 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import webpack from 'webpack'
+// import { resolve } from 'path'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // if (typeof process !== 'undefined') {
-        config.resolve.fallback = {
-          ...config.resolve.fallback,
-          stream: import.meta.resolve('stream-browserify'),
-          crypto: import.meta.resolve('crypto-browserify'),
-        };
-      // }
-
-      config.plugins.push(
-        new webpack.ProvidePlugin({
-          process: 'process/browser',
-        }),
-        new webpack.NormalModuleReplacementPlugin(
-          /node:crypto/,
-          (resource) => {
-            resource.request = resource.request.replace(/^node:/, '');
-          }
-        )
-      );
-    }
-    return config;
+  resolve: {
+    // alias: {
+    //   process: require.resolve('process/browser'),
+    // },
+    alias: {
+      stream: 'stream-browserify',
+      crypto: 'crypto-browserify',
+    },
   },
+  plugins: [react(), {
+    name: 'replace-crypto',
+    configureServer: ({ middlewares }) => {
+      middlewares.use((req, res, next) => {
+        if(req.path === '/node:crypto') {
+          req.url = req.url.replace('/node:crypto', '')
+        }
+        next()
+      })
+    }
+  }],
+  define: {
+    global: "globalThis",
+  }
 })

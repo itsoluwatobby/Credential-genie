@@ -1,13 +1,17 @@
 import { useCredentialContext } from "./context/useCredentialContext"
+// import { Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
-  const { webConnect } = useCredentialContext()
+  // const { webConnect } = useCredentialContext()
 
   return (
     <main>
       Hello
-      {webConnect.myDid}
+  
+
+      <ToastContainer />
     </main>
   )
 }
