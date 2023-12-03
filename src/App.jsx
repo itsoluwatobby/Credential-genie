@@ -1,5 +1,5 @@
-import { useCredentialContext } from "./context/useCredentialContext"
-// import { Routes, Route } from 'react-router-dom'
+// import { useCredentialContext } from "./context/useCredentialContext"
+import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 
 
@@ -8,8 +8,9 @@ function App() {
 
   return (
     <main>
-      Hello
-  
+      <Routes>
+        <Route index element={<h1>Hello</h1>} />
+      </Routes>
 
       <ToastContainer />
     </main>
