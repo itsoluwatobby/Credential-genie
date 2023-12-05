@@ -1,0 +1,25 @@
+{
+  "protocol": "https://vc_protocol_cg.com/credential-genie",
+  "published": true,
+  "types": {
+    "vc": {
+      "schema": "https://vc_protocol_cg.com/credential-genie/signedVCs",
+      "dataFormats": ["application/json"]
+    }
+  },
+  "structure": {
+    "vc": {
+      "$actions": [
+        { 
+          "who": "anyone", 
+          "can": "write" 
+        },
+        { 
+          "who": "recipient", 
+          "of": "vc", 
+          "can": "read"
+        }
+      ]
+    }
+  }
+}
