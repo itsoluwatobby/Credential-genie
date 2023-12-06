@@ -79,7 +79,7 @@ export const Credential = () => {
   // }
 
   return (
-    <main className="flex flex-col gap-y-5 p-4 w-full h-full">
+    <main className="hidebars flex flex-col gap-y-5 p-4 w-full h-full">
       {/* <p title='Tap to copy'
       className="cursor-default bg-gray-100 w-fit px-2 p-1"
       onClick={copyDID}>
@@ -114,7 +114,7 @@ export const Credential = () => {
 
       { isSuccess ? <div>{JSON.stringify(result)}</div> : null }
 
-      <div className='flex flex-col gap-3'>
+      <div className={`${(title?.length || recipientDID?.length || email?.length || Object.entries(obj)?.length) ? 'hidden' : 'flex'} flex-col gap-3`}>
         {
           credentials.vcs.map((cred, index) => (
             <div key={index}

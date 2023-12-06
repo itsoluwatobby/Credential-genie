@@ -8,7 +8,7 @@ import { Navbar } from './components/Navbar';
 function App() {
 
   return (
-    <main className='h-screen w-screen'>
+    <main className='hidebars w-screen'>
       <Navbar />
       <Routes>
 
