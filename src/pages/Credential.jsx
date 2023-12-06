@@ -32,10 +32,15 @@ export const Credential = () => {
             }
           }
         })
-        if(!records.length) throw new Error('No credentials')
-        Promise.all(records.map(async(record) => {
+        console.log(records)
+        if(!records?.length) throw new Error('No credentials')
+        await Promise.all(records?.map(async(record) => {
           const rec = await record.data.json()
-          setCredentials(prev => ({...prev, vcs: [...prev.vcs, rec]}))
+          setCredentials(prev => ({
+            ...prev, vcs: [...prev.vcs, {
+              ...rec, id: record?.id, 
+              // date: record?.descriptor?.dateCreated
+            }]}))
         }))
       }
       catch(error){
@@ -49,7 +54,7 @@ export const Credential = () => {
     return () => {
       isMounted = false
     }
-  }, [webConnect.web5.dwn.records])
+  }, [webConnect.web5])
 
   const { key, value } = attributes
   const { recipientDID, email } = userDetail
@@ -112,8 +117,8 @@ export const Credential = () => {
 
       <div className='flex flex-col gap-3'>
         {
-          credentials.vcs.map(cred => (
-            <div key={cred.id}
+          credentials.vcs.map((cred, index) => (
+            <div key={index}
             className='flex flex-col gap-y-1'
             >
               <p className='whitespace-nowrap font-bold'>Title: <span className='whitespace-pre-wrap break-all font-normal'>{cred.title?.substring(0,150)}...</span>

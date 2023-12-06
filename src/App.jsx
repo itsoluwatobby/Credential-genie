@@ -9,10 +9,11 @@ function App() {
   return (
     <main className='h-screen w-screen'>
       <Routes>
-        {/* this first route will be for the landing page */}
-        <Route index element={<h1>Hello</h1>} />
 
-        <Route path='/vc_credential' element={<Credential />} />
+        {/* <Route index element={<h1>Hello</h1>} /> */}
+
+        <Route index element={<Credential />} />
+        {/* <Route path='/vc_credential' element={<Credential />} /> */}
 
         <Route path='*' element={<NotFound />} />
       </Routes>
