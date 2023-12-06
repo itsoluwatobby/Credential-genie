@@ -32,7 +32,6 @@ export const Credential = () => {
             }
           }
         })
-        console.log(records)
         if(!records?.length) throw new Error('No credentials')
         await Promise.all(records?.map(async(record) => {
           const rec = await record.data.json()
@@ -75,17 +74,17 @@ export const Credential = () => {
     } 
   }
 
-  const copyDID = () => {
-    navigator.clipboard.writeText(webConnect.myDid)
-  }
+  // const copyDID = () => {
+  //   navigator.clipboard.writeText(webConnect.myDid)
+  // }
 
   return (
     <main className="flex flex-col gap-y-5 p-4 w-full h-full">
-      <p title='Tap to copy'
+      {/* <p title='Tap to copy'
       className="cursor-default bg-gray-100 w-fit px-2 p-1"
       onClick={copyDID}>
         My DID: {webConnect.myDid.substring(0,15)}
-      </p>
+      </p> */}
       
       <input type='text' value={title} className="border h-12 p-1" placeholder="title" onChange={e => setTitle(e.target.value)} />
       <input 
