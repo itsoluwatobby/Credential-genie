@@ -79,7 +79,7 @@ export const Credential = () => {
   // }
 
   return (
-    <main className="flex flex-col gap-y-5 p-4 w-full h-full">
+    <main className="hidebars flex flex-col gap-y-5 p-4 w-full h-full">
       {/* <p title='Tap to copy'
       className="cursor-default bg-gray-100 w-fit px-2 p-1"
       onClick={copyDID}>
