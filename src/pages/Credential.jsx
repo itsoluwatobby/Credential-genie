@@ -114,7 +114,7 @@ export const Credential = () => {
 
       { isSuccess ? <div>{JSON.stringify(result)}</div> : null }
 
-      <div className='flex flex-col gap-3'>
+      <div className={`${(title?.length || recipientDID?.length || email?.length || Object.entries(obj)?.length) ? 'hidden' : 'flex'} flex-col gap-3`}>
         {
           credentials.vcs.map((cred, index) => (
             <div key={index}

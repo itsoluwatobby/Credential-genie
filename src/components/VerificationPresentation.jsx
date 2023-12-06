@@ -4,7 +4,7 @@
 export const VerificationPresentation = ({ obj, title, recipientId }) => {
 
   return (
-    <section className={`overflow-hidden border-2 border-gray-400 flex flex-col ${(title || recipientId) ? 'scale-1' : 'scale-0'} rounded-md maxscreen:w-[90%] w-1/2 text-sm transition-transform`}>
+    <section className={`overflow-hidden border-2 border-gray-400 flex flex-col ${(title || recipientId || Object.entries(obj)?.length) ? 'scale-1' : 'scale-0'} rounded-md maxscreen:w-[90%] w-1/2 text-sm transition-transform`}>
       <p className='capitalize font-bold bg-gray-100 p-1.5'>Title: {title}</p>
       <p className='font-[600] whitespace-nowrap p-1.5'>DID: <span className="font-[400]">{recipientId?.substring(0,40)}...</span></p>
       <div className='flex flex-col p-3'>
