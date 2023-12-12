@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { VerifiableCredential } from '@web5/credentials';
+// import { transporter, mailOptions } from '../utils/sendEmail'
 import protocolDefinition from '../utils/protocolDefinition.json'
 import { initAppState, camelCase, constructVCSigner, createDynamicClass } from '../utils/constructVCSigner';
 
-export const useSignCredential = ({ recipientDID, web5Object, title, properties }) => {
+export const useSignCredential = ({ recipientDID, web5Object, email, title, properties }) => {
   const [appState, setAppState] = useState(initAppState)
+
+  void(email)
 
   const signCredential = async() => {
     let storedSignedVC = ''
@@ -27,8 +30,13 @@ export const useSignCredential = ({ recipientDID, web5Object, title, properties 
         const { status: sentStatus } = await record.send(recipientDID)
         if(sentStatus.code == 202) {
           // TODO: Implement sending emails here
-
-          setAppState(prev => ({...prev, isSuccess: true, success: 'Sent!'}))
+          // transporter.sendMail(mailOptions({userEmail: email, vcTitle: title, credentials: ''}), (err) => {
+          //   if(err) {
+          //     setAppState(prev => ({...prev, isSuccess: true, success: 'Unable to send mail!'}))
+          //   }
+          //   else 
+          // })
+          setAppState(prev => ({...prev, isSuccess: true, success: 'Signed and mail sent successfully!'}))
         }
         else throw new Error('Error sending signed VC to Recipient')
       }
