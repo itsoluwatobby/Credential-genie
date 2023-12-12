@@ -10,7 +10,7 @@ function App() {
     <main>
       <Routes>
         <Route index element={<LandingPage />} />
-        <Route path="/vc_credential" element={<Credential />} />
+        <Route path="/create" element={<Credential />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
