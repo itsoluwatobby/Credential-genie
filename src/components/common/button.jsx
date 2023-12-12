@@ -6,6 +6,7 @@ const Button = ({
   rightIcon,
   leftIcon,
   variant,
+  type,
   onClick,
   colorScheme,
 }) => {
@@ -34,6 +35,7 @@ const Button = ({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={classNames(defaultStyles, {
         [small]: size === 'sm',

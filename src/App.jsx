@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
+import Create from './pages/create';
+import Verify from './pages/verify';
 import NotFound from './pages/NotFound';
-import Credential from './pages/Credential';
 import LandingPage from './pages/landingPage';
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
     <main>
       <Routes>
         <Route index element={<LandingPage />} />
-        <Route path="/vc_credential" element={<Credential />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/verify" element={<Verify />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

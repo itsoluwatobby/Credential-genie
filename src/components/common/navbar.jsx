@@ -40,7 +40,7 @@ const Navbar = () => {
           </span>
 
           {showMobileNav && (
-            <ul className="flex flex-col md:hidden fixed top-0 left-0 w-full h-full bg-primary-100 items-center justify-center gap-5">
+            <ul className="z-10 flex flex-col md:hidden fixed top-0 left-0 w-full h-full bg-primary-100 items-center justify-center gap-5">
               <span
                 className="fixed top-10 right-10 text-white cursor-pointer text-4xl"
                 onClick={() => setShowMobileNav(false)}
