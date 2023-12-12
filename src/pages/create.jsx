@@ -3,6 +3,7 @@ import Footer from '../components/common/footer';
 import Navbar from '../components/common/navbar';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Create = () => {
   const formik = useFormik({
@@ -30,6 +31,8 @@ const Create = () => {
 
   const defaultStyle =
     'mt-1 py-3 px-3 w-full border border-gray-300 rounded-md px-6 bg-gray-50';
+
+  usePageTitle('Credential Genie — Create');
 
   return (
     <>

@@ -9,7 +9,6 @@ export default {
       },
       fontFamily: {
         sans: ['Lato', 'sans-serif'],
-        serif: ['Goldman', 'serif'],
       },
     },
   },

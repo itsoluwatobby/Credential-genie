@@ -11,7 +11,9 @@ const Header = () => {
         <div className="overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-5 items-center justify-center">
           <article className="flex flex-col gap-3 items-start justify-center">
             <h1 className="text-3xl md:text-5xl leading-tight md:leading-tight text-left">
-              <span>Unlock Your Digital Identity with</span>{' '}
+              <span className="font-bold">
+                Unlock Your Digital Identity with
+              </span>{' '}
               <span className="text-primary-100 font-bold">
                 Verifiable&nbsp;Credentials
               </span>

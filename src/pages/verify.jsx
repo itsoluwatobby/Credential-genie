@@ -5,15 +5,14 @@ import Button from '../components/common/button';
 import Footer from '../components/common/footer';
 import Navbar from '../components/common/navbar';
 import { TbFileTypePdf } from 'react-icons/tb';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Verify = () => {
   const formik = useFormik({
     initialValues: {
-      // ... (other fields)
       upload: null,
     },
     validationSchema: Yup.object({
-      // ... (other validations)
       upload: Yup.mixed()
         .required('File is required')
         .test('fileType', 'Only PDF files are allowed', (value) => {
@@ -26,7 +25,7 @@ const Verify = () => {
     },
   });
 
-  const defaultStyle = 'mt-1 p-2 w-full border border-gray-300 rounded-md px-5';
+  usePageTitle('Credential Genie — Verify');
 
   return (
     <>

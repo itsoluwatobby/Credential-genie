@@ -94,7 +94,6 @@ export const teamData = [
     id: 3,
     name: 'Temitope Victoria',
     initial: 'TV',
-
     email: 'themitokpe@gmail.com',
     avatar: temitopeAvatar,
     position: 'Technical Writer',
@@ -103,7 +102,6 @@ export const teamData = [
     id: 4,
     name: 'Oluwatobi Akinola',
     initial: 'OA',
-
     email: 'itsoluwatobby@gmail.com',
     avatar: tobiAvatar,
     position: 'Backend Developer',
