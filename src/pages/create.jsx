@@ -4,30 +4,60 @@ import Navbar from '../components/common/navbar';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import usePageTitle from '../hooks/usePageTitle';
+import { useSignCredential } from '../hooks/useSignCredential';
+import { toast } from 'react-toastify';
+import { useCredentialContext } from '../context/useCredentialContext';
+import { useState } from 'react';
 
 const Create = () => {
+  const { webConnect } = useCredentialContext();
+  const [attributes, setAttributes] = useState({ key: '', value: '' });
+  const [obj, setObj] = useState({});
+  const { appState, signCredential } = useSignCredential();
+
+  const { key, value } = attributes;
+  const { isLoading, isError, error, isSuccess, success } = appState;
+console.log(webConnect.myDid)
   const formik = useFormik({
     initialValues: {
       title: '',
-      purpose: '',
+      // purpose: '',
       applyingFor: '',
       recipientEmail: '',
       recipientID: '',
     },
     validationSchema: Yup.object({
       title: Yup.string().required('Title is required'),
-      purpose: Yup.string().required('Purpose is required'),
+      // purpose: Yup.string().required('Purpose is required'),
       applyingFor: Yup.string().required('Applying for is required'),
       recipientEmail: Yup.string()
         .email('Invalid email address')
         .required('Recipient Email is required'),
       recipientID: Yup.string().required('Recipient ID is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       // Handle form submission logic here
       console.log('Form submitted with values:', values);
+      const result = await signCredential({
+        web5Object: webConnect.web5,
+        email: values.recipientEmail,
+        recipientDID: values.recipientID,
+        title: values.title,
+        purpose: values.applyingFor,
+        properties: obj,
+      })
+      isSuccess ? toast.success(result) : toast.error(error)
     },
   });
+
+  const pushToArray = () => {
+    if (!key || !value) return;
+    setObj((prev) => ({
+      ...prev,
+      [attributes.key.trim()]: attributes.value.trim(),
+    }));
+    setAttributes({ key: '', value: '' });
+  };
 
   const defaultStyle =
     'mt-1 py-3 px-3 w-full border border-gray-300 rounded-xl px-6 bg-gray-50';
@@ -157,7 +187,7 @@ const Create = () => {
                 </div>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 flex flex-col gap-2">
                 <label
                   htmlFor="purpose"
                   className="block text-sm font-medium text-gray-700"
@@ -165,7 +195,7 @@ const Create = () => {
                   Purpose of Verifiable Credential Enter the purpose you want to
                   create for
                 </label>
-                <textarea
+                {/* <textarea
                   type="text"
                   id="purpose"
                   placeholder="Enter the purpose you want to create for"
@@ -180,7 +210,34 @@ const Create = () => {
                   <div className="text-red-500 text-sm">
                     {formik.errors.purpose}
                   </div>
-                )}
+                )} */}
+                 <div className="flex items-center w-[80%] h-12 gap-1">
+                  <input
+                    type="text"
+                    value={key}
+                    className="border h-full w-full p-1 focus:outline-0"
+                    placeholder="name"
+                    onChange={(e) =>
+                      setAttributes((prev) => ({ ...prev, key: e.target.value }))
+                    }
+                  />
+                  <input
+                    type="text"
+                    value={value}
+                    className="border h-full w-full p-1 focus:outline-0"
+                    placeholder="value"
+                    onChange={(e) =>
+                      setAttributes((prev) => ({ ...prev, value: e.target.value }))
+                    }
+                  />
+                  <button
+                    type='button'
+                    onClick={pushToArray}
+                    className="border h-full rounded-md py-1.5 px-7 ml-3 bg-gray-600 text-white hover:opacity-80 active:opacity-100 transition-opacity w-fit"
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
 
               <div className="grid md:flex md:justify-center mt-4">
@@ -190,7 +247,7 @@ const Create = () => {
                   colorScheme="primary"
                   type="submit"
                 >
-                  Create
+                  {isLoading ? 'loading...' : isError ? error : isSuccess ? success : 'Create'}
                 </Button>
               </div>
             </form>

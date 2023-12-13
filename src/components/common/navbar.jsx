@@ -6,10 +6,17 @@ import { IoClose } from 'react-icons/io5';
 import Logo from './logo';
 import { navbarData } from '../../services/data';
 import { useState } from 'react';
+import { useCredentialContext } from '../../context/useCredentialContext';
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { webConnect } = useCredentialContext();
   const [showMobileNav, setShowMobileNav] = useState(false);
+
+  const copyDID = () => {
+    if(!navigator.clipboard) return alert('Platform does not support copying')
+    navigator.clipboard.writeText(webConnect.myDid)
+  }
 
   return (
     <nav className="">
@@ -35,6 +42,13 @@ const Navbar = () => {
                 <Link to={item.path}>{item.label}</Link>
               </li>
             ))}
+             <button
+              title={`copy: ${webConnect.myDid.substring(0,15)}`}
+              className='w-fit px-4 py-1 hover:opacity-80 active:opacity-100 transition-opacity'
+              onClick={copyDID}
+            >
+              My DID
+            </button>
           </ul>
 
           <span
@@ -65,6 +79,7 @@ const Navbar = () => {
                   <Link to={item.path}>{item.label}</Link>
                 </li>
               ))}
+
             </ul>
           )}
         </div>
