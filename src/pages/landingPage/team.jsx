@@ -26,7 +26,7 @@ const Team = () => {
     );
   };
   return (
-    <section className="py-20">
+    <section className="py-20 bg-gray-50">
       <div className="max-w-[70rem] mx-auto px-5">
         <div className="flex flex-col items-center justify-center gap-10">
           <div className="flex flex-col gap-3">

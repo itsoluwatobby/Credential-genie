@@ -1,5 +1,4 @@
-import Logo from '../../components/common/logo';
-
+import { MdSwipe } from 'react-icons/md';
 const Demo = () => {
   const list = [
     {
@@ -39,7 +38,7 @@ const Demo = () => {
     return (
       <article
         key={item.id}
-        className={`${item.bg} md:hover:animate-bounce  font-mono grid grid-cols-[1fr_8rem] text-white rounded-xl w-[25rem] flex-shrink-0 overflow-hidden shadow-2xl`}
+        className={`${item.bg} font-mono grid grid-cols-[1fr_8rem] text-white rounded-xl w-[25rem] flex-shrink-0 overflow-hidden shadow-2xl`}
       >
         <div className="py-[40px] px-8 flex flex-col gap-[60px]">
           <div className="flex flex-col text-2xl">
@@ -54,13 +53,13 @@ const Demo = () => {
     );
   };
   return (
-    <section className="pt-20 bg-gray-50 ">
+    <section className="py-20">
       <div className="flex flex-col">
-        <div className="flex flex-col items-center justify-center gap-5 px-2">
-          <h1 className="text-4xl max-w-[30ch] text-center">
-            Here's what a VC can look like
+        <div className="flex flex-col items-start md:items-center justify-center gap-5 px-5 md:px-0">
+          <h1 className="text-3xl md:text-4xl max-w-[30ch]">
+            Verifiable Credentials Cards
           </h1>
-          <p className="text-gray-500 text-center">
+          <p className="text-gray-500">
             With beautiful predefined templates it's easier to share your signed
             VC with clients
           </p>
@@ -71,6 +70,10 @@ const Demo = () => {
         scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-thin scrollbar-rounded-full"
         >
           {list.map((item) => renderCard(item))}
+        </div>
+
+        <div className="mt-10 flex items-center justify-center text-4xl text-gray-500">
+          <MdSwipe />
         </div>
       </div>
     </section>

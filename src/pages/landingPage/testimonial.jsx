@@ -7,9 +7,11 @@ const Testimonials = () => {
         key={item.id}
         className="rounded-xl p-8 border bg-white flex flex-col gap-7"
       >
-        <figure className="flex items-center justify-start md:justify-center mt-0 md:mt-[-80px]">
-          <img src={item.avatar} />
-        </figure>
+        <div className="flex items-center md:justify-center justify-start w-full">
+          <figure className="md:justify-center mt-0 md:mt-[-80px] w-[5rem] h-[5rem] overflow-hidden">
+            <img className="w-full h-full object-cover" src={item.avatar} />
+          </figure>
+        </div>
 
         <p className="text-gray-500">{item.comment}</p>
         <h4 className="text-xl text-primary-100">{item.name}</h4>

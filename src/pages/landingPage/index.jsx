@@ -20,8 +20,8 @@ const LandingPage = () => {
       <Why />
       <Goal />
       <Testimonials />
-      <Team />
       <Demo />
+      <Team />
       <Footer />
     </main>
   );

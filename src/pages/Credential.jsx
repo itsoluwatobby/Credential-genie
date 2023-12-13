@@ -92,10 +92,6 @@ const Credential = () => {
     }
   };
 
-  // const copyDID = () => {
-  //   navigator.clipboard.writeText(webConnect.myDid)
-  // }
-
   return (
     <main className="hidebars flex flex-col gap-y-5 p-4 w-full h-full">
       {/* <p title='Tap to copy'

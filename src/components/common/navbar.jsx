@@ -15,7 +15,12 @@ const Navbar = () => {
     <nav className="">
       <div className="max-w-[75rem] mx-auto px-5">
         <div className="flex items-center justify-between h-[8rem]">
-          <Logo size={1.5} />
+          <div className="hidden md:block">
+            <Logo size={1.5} />
+          </div>
+          <div className="block md:hidden">
+            <Logo iconOnly size={1.5} />
+          </div>
 
           <ul className="hidden md:flex gap-8 items-center justify-center">
             {navbarData.map((item) => (

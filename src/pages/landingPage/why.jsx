@@ -5,7 +5,7 @@ const Why = () => {
     return (
       <article className="bg-white flex flex-col gap-5 border rounded-xl py-8 px-8">
         <figure className="flex items-center justify-center mt-5">
-          <div className="h-[10rem] w-[10rem] ">
+          <div className="h-[8rem] md:h-[10rem] w-[8rem] md:w-[10rem] ">
             <img className="w-full h-full object-contain" src={item.image} />
           </div>
         </figure>

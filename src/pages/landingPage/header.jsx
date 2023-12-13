@@ -46,7 +46,7 @@ const Header = () => {
           </article>
 
           <figure className="flex md:hidden items-center justify-center">
-            <div className="w-[20rem]">
+            <div className="w-[15rem]">
               <img className="w-full" src={illustration} />
             </div>
           </figure>
