@@ -6,6 +6,7 @@ import Navbar from '../../components/common/navbar';
 import Footer from '../../components/common/footer';
 import Team from './team';
 import usePageTitle from '../../hooks/usePageTitle';
+import Demo from './demo';
 
 const LandingPage = () => {
   usePageTitle(
@@ -18,8 +19,9 @@ const LandingPage = () => {
       <Header />
       <Why />
       <Goal />
-      <Team />
       <Testimonials />
+      <Team />
+      <Demo />
       <Footer />
     </main>
   );

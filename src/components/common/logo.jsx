@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 
-const Logo = ({ size }) => {
+const Logo = ({ iconOnly }) => {
   return (
     <Link
       to="/"
@@ -12,10 +12,12 @@ const Logo = ({ size }) => {
       <div className="w-[3rem] h-[3rem]">
         <img className="w-full h-full object-contain" src={logo} />
       </div>
-      <div className="flex item-center justify-center font-bold">
-        <span className="text-primary-100">Credential</span>
-        <span className="text-black">Genie</span>
-      </div>
+      {!iconOnly && (
+        <div className="flex item-center justify-center font-bold">
+          <span className="text-primary-100">Credential</span>
+          <span className="text-black">Genie</span>
+        </div>
+      )}
     </Link>
   );
 };

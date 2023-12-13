@@ -30,7 +30,7 @@ const Create = () => {
   });
 
   const defaultStyle =
-    'mt-1 py-3 px-3 w-full border border-gray-300 rounded-md px-6 bg-gray-50';
+    'mt-1 py-3 px-3 w-full border border-gray-300 rounded-xl px-6 bg-gray-50';
 
   usePageTitle('Credential Genie — Create');
 
@@ -85,7 +85,8 @@ const Create = () => {
                     htmlFor="applyingFor"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Applying For
+                    Applying For{' '}
+                    <span className="text-gray-400">(self or third party)</span>
                   </label>
                   <input
                     type="text"

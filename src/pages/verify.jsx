@@ -79,7 +79,7 @@ const Verify = () => {
 
                 {formik.values.upload && (
                   <div className="bg-gray-100 h-[20rem] w-[20rem] p-5 rounded-full cursor-pointer overflow-hidden flex flex-col gap-2 text-gray-500 items-center justify-center">
-                    <h6 className="text-2xl font-[700] text-green-400 ">
+                    <h6 className="text-2xl font-[700] text-green-600 ">
                       Uploaded
                     </h6>
                     <p>Filename: {formik.values.upload.name}</p>
