@@ -107,3 +107,26 @@ export const teamData = [
     position: 'Backend Developer',
   },
 ];
+
+export const demoCardData = [
+  {
+    id: 1,
+    name: 'Moses Jack',
+    did: 'did:web:123451ay1b9n9f91j',
+  },
+  {
+    id: 2,
+    name: 'Mary Jane',
+    did: 'did:web:123451ay1b9n9f91j',
+  },
+  {
+    id: 3,
+    name: 'Isaac Newton',
+    did: 'did:web:123451ay1b9n9f91j',
+  },
+  {
+    id: 4,
+    name: 'Isaac Newton',
+    did: 'did:web:123451ay1b9n9f91j',
+  },
+];
