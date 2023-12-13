@@ -17,7 +17,7 @@ const NotFound = () => {
       <h1 className="font-bold text-6xl">Not Found</h1>
 
       <span className="text-lg text-gray-500 max-w-[40ch] text-center">
-        The page you're tring to visit is under development, or can't be found.
+        The page you&apos;re trying to visit is under development, or can&apos;t be found.
       </span>
 
       <div className="mt-5">

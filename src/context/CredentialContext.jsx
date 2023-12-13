@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from 'react';
-// import { Web5 } from '@web5/api/browser';
+import { Web5 } from '@web5/api/browser';
 import { configureProtocol } from '../utils/installProtocol';
+// const { Web5 } = await import('@web5/api/browser');
 
 export const CredentialContext = createContext({});
 
@@ -15,7 +16,6 @@ export const CredentialDataProvider = ({ children }) => {
   useEffect(() => {
     let isMounted = true;
     const startApp = async () => {
-      const { Web5 } = await import('@web5/api/browser');
       try {
         const { web5, did } = await Web5.connect({ sync: '2s' });
         setWebConnect({ web5, myDid: did });
@@ -23,7 +23,7 @@ export const CredentialDataProvider = ({ children }) => {
         setWebConnect((prev) => ({ ...prev, protocolMessage: res }));
       }
       catch(err){
-        console.log(error.message)
+        console.log(err.message)
       }
     };
     isMounted ? startApp() : null;

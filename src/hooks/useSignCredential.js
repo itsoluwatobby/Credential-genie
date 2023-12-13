@@ -5,12 +5,11 @@ import { VerifiableCredential } from '@web5/credentials';
 import protocolDefinition from '../utils/protocolDefinition.json'
 import { initAppState, camelCase, constructVCSigner, createDynamicClass } from '../utils/constructVCSigner';
 
-export const useSignCredential = ({ recipientDID, web5Object, email, title, properties }) => {
+export const useSignCredential = () => {
   const [appState, setAppState] = useState(initAppState)
 
-  void(email)
-
-  const signCredential = async() => {
+  const signCredential = async({ recipientDID, web5Object, email, title, properties }) => {
+    void(email)
     let storedSignedVC = ''
     const className = camelCase(title)
     setAppState(prev => ({...prev, isLoading: true}))
@@ -73,7 +72,6 @@ export const useSignCredential = ({ recipientDID, web5Object, email, title, prop
           const { status: sentStatus } = await record.send(recipientDID)
           if(sentStatus.code == 202) {
             // TODO: Implement sending emails here
-
             setAppState(prev => ({...prev, isSuccess: true, success: 'Sent!'}))
             resendIfFailed.className === className ? localStorage.removeItem(className) : null
             vcObject = {}
@@ -97,5 +95,6 @@ export const useSignCredential = ({ recipientDID, web5Object, email, title, prop
       setAppState(prev => ({...prev, isLoading: false}))
     }
   }
+
   return { appState, signCredential }
 }
