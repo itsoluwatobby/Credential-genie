@@ -5,9 +5,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import usePageTitle from '../hooks/usePageTitle';
 import { useSignCredential } from '../hooks/useSignCredential';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useCredentialContext } from '../context/useCredentialContext';
 import { useState } from 'react';
+import { VerificationPresentation } from '../components/VerificationPresentation';
+import VCCard from '../components/common/VCCard';
 
 const Create = () => {
   const { webConnect } = useCredentialContext();
@@ -17,12 +20,12 @@ const Create = () => {
 
   const { key, value } = attributes;
   const { isLoading, isError, error, isSuccess, success } = appState;
-console.log(webConnect.myDid)
+  // console.log(webConnect.myDid);
   const formik = useFormik({
     initialValues: {
       title: '',
       // purpose: '',
-      applyingFor: '',
+      applyingFor: 'Third party',
       recipientEmail: '',
       recipientID: '',
     },
@@ -35,9 +38,12 @@ console.log(webConnect.myDid)
         .required('Recipient Email is required'),
       recipientID: Yup.string().required('Recipient ID is required'),
     }),
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       // Handle form submission logic here
-      console.log('Form submitted with values:', values);
+
+      if (webConnect.myDid === values.recipientID)
+        return toast.error('You can use your own DID for now!');
+
       const result = await signCredential({
         web5Object: webConnect.web5,
         email: values.recipientEmail,
@@ -45,10 +51,14 @@ console.log(webConnect.myDid)
         title: values.title,
         purpose: values.applyingFor,
         properties: obj,
-      })
-      isSuccess ? toast.success(result) : toast.error(error)
+      });
+
+      if (isSuccess) return toast.success(result);
+      if (isError) return toast.error(error);
     },
   });
+
+  // toast.success('test');
 
   const pushToArray = () => {
     if (!key || !value) return;
@@ -123,6 +133,7 @@ console.log(webConnect.myDid)
                     placeholder="Please indicate whether for self or third party"
                     id="applyingFor"
                     name="applyingFor"
+                    disabled
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.applyingFor}
@@ -192,53 +203,54 @@ console.log(webConnect.myDid)
                   htmlFor="purpose"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Purpose of Verifiable Credential Enter the purpose you want to
-                  create for
+                  Custom information on your VC{' '}
+                  <span className="text-blue-500">(Complusory)</span>
                 </label>
-                {/* <textarea
-                  type="text"
-                  id="purpose"
-                  placeholder="Enter the purpose you want to create for"
-                  name="purpose"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.purpose}
-                  className={defaultStyle + ' min-h-[10rem]'}
-                ></textarea>
 
-                {formik.touched.purpose && formik.errors.purpose && (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.purpose}
-                  </div>
-                )} */}
-                 <div className="flex items-center w-[80%] h-12 gap-1">
+                <div className="grid grid-cols-[1fr_1fr] items-center justify-center gap-5">
                   <input
                     type="text"
                     value={key}
-                    className="border h-full w-full p-1 focus:outline-0"
-                    placeholder="name"
+                    className={defaultStyle}
+                    placeholder="Name eg. Position"
                     onChange={(e) =>
-                      setAttributes((prev) => ({ ...prev, key: e.target.value }))
+                      setAttributes((prev) => ({
+                        ...prev,
+                        key: e.target.value,
+                      }))
                     }
                   />
                   <input
                     type="text"
                     value={value}
-                    className="border h-full w-full p-1 focus:outline-0"
-                    placeholder="value"
+                    className={defaultStyle}
+                    placeholder="Value eg. Engineer"
                     onChange={(e) =>
-                      setAttributes((prev) => ({ ...prev, value: e.target.value }))
+                      setAttributes((prev) => ({
+                        ...prev,
+                        value: e.target.value,
+                      }))
                     }
                   />
-                  <button
-                    type='button'
+                  <Button
                     onClick={pushToArray}
-                    className="border h-full rounded-md py-1.5 px-7 ml-3 bg-gray-600 text-white hover:opacity-80 active:opacity-100 transition-opacity w-fit"
+                    variant="outline"
+                    size="md"
+                    type="button"
+                    colorScheme="dark"
                   >
-                    Add
-                  </button>
+                    Add Custom Information
+                  </Button>
                 </div>
               </div>
+
+              {formik.values.title && formik.values.recipientID && (
+                <VerificationPresentation
+                  title={formik.values.title}
+                  obj={obj}
+                  recipientId={formik.values.recipientID}
+                />
+              )}
 
               <div className="grid md:flex md:justify-center mt-4">
                 <Button
@@ -247,7 +259,14 @@ console.log(webConnect.myDid)
                   colorScheme="primary"
                   type="submit"
                 >
-                  {isLoading ? 'loading...' : isError ? error : isSuccess ? success : 'Create'}
+                  {isLoading ? 'loading...' : 'Create Verifiable Credential'}
+                  {/* {isLoading
+                    ? 'loading...'
+                    : isError
+                    ? error
+                    : isSuccess
+                    ? success
+                    : 'Create'} */}
                 </Button>
               </div>
             </form>

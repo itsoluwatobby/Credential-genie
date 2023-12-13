@@ -13,11 +13,11 @@ const NotFound = () => {
   }, [navigate]);
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center  font-mono gap-5 text-4xl">
-      <h1 className="font-bold text-6xl">Not Found</h1>
+    <div className="w-full h-screen flex flex-col items-center justify-center gap-5 text-4xl">
+      <h1 className="font-bold text-6xl">Under development</h1>
 
       <span className="text-lg text-gray-500 max-w-[40ch] text-center">
-        The page you&apos;re trying to visit is under development, or can&apos;t be found.
+        The page you&apos;re trying to visit is currently under development.
       </span>
 
       <div className="mt-5">

@@ -1,5 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Toaster } from 'react-hot-toast';
 
 import Create from './pages/create';
 import Verify from './pages/verify';
@@ -12,11 +15,11 @@ function App() {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path="/create" element={<Create />} />
-        <Route path="/verify" element={<Verify />} />
+        {/* <Route path="/verify" element={<Verify />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <ToastContainer />
+      <Toaster position="bottom-left" reverseOrder={false} />
     </main>
   );
 }

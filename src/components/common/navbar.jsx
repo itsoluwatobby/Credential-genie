@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineMenuAlt4 } from 'react-icons/hi';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoClipboard } from 'react-icons/io5';
+import { toast } from 'react-hot-toast';
 
 import Logo from './logo';
 import { navbarData } from '../../services/data';
 import { useState } from 'react';
 import { useCredentialContext } from '../../context/useCredentialContext';
+import Button from './button';
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -14,9 +16,9 @@ const Navbar = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   const copyDID = () => {
-    if(!navigator.clipboard) return alert('Platform does not support copying')
-    navigator.clipboard.writeText(webConnect.myDid)
-  }
+    if (!navigator.clipboard) return alert('Platform does not support copying');
+    navigator.clipboard.writeText(webConnect.myDid);
+  };
 
   return (
     <nav className="">
@@ -42,13 +44,25 @@ const Navbar = () => {
                 <Link to={item.path}>{item.label}</Link>
               </li>
             ))}
-             <button
-              title={`copy: ${webConnect.myDid.substring(0,15)}`}
-              className='w-fit px-4 py-1 hover:opacity-80 active:opacity-100 transition-opacity'
+            <Button
+              variant="fill"
+              size="md"
+              onClick={() => {
+                copyDID();
+                toast.success('DID Copied');
+              }}
+              colorScheme="primary"
+              rightIcon={<IoClipboard />}
+            >
+              Copy your DID
+            </Button>
+            {/* <button
+              title={`copy: ${webConnect.myDid.substring(0, 15)}`}
+              className="w-fit px-4 py-1 hover:opacity-80 active:opacity-100 transition-opacity"
               onClick={copyDID}
             >
-              My DID
-            </button>
+              Copy my DID
+            </button> */}
           </ul>
 
           <span
@@ -79,7 +93,6 @@ const Navbar = () => {
                   <Link to={item.path}>{item.label}</Link>
                 </li>
               ))}
-
             </ul>
           )}
         </div>
