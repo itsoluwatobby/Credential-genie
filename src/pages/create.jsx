@@ -55,7 +55,7 @@ const Create = () => {
       if (isSuccess) {
         setSignedObj({
           signed: true, author: webConnect.web5.connectedDid,
-          recipient: values.recipientDID, title: values.title,
+          recipient: values.recipientID, title: values.title,
           obj
         })
         setObj({})
