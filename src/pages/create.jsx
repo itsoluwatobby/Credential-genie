@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { useCredentialContext } from '../context/useCredentialContext';
 import { useState } from 'react';
 import { VerificationPresentation } from '../components/VerificationPresentation';
+import { initSignedObj } from '../utils/constructVCSigner';
 // import VCCard from '../components/common/VCCard';
 
 const Create = () => {
@@ -16,6 +17,7 @@ const Create = () => {
   const [attributes, setAttributes] = useState({ key: '', value: '' });
   const [obj, setObj] = useState({});
   const { appState, signCredential } = useSignCredential();
+  const [signedObj, setSignedObj] = useState(initSignedObj);
 
   const { key, value } = attributes;
   const { isLoading, isError, error, isSuccess, success } = appState;
@@ -39,6 +41,7 @@ const Create = () => {
     }),
     onSubmit: async (values) => {
       // Handle form submission logic here
+      if(!Object.entries(obj).length) return
       const result = await signCredential({
         web5Object: webConnect.web5,
         email: values.recipientEmail,
@@ -50,6 +53,11 @@ const Create = () => {
       });
 
       if (isSuccess) {
+        setSignedObj({
+          signed: true, author: webConnect.web5.connectedDid,
+          recipient: values.recipientDID, title: values.title,
+          obj
+        })
         setObj({})
         return toast.success(result)
       }
@@ -73,7 +81,6 @@ const Create = () => {
 
   usePageTitle('Credential Genie — Create');
 
-  console.log(webConnect.myDid)
   return (
     <>
       <Navbar />
@@ -250,6 +257,7 @@ const Create = () => {
                   obj={obj} setObj={setObj}
                   myDid={webConnect.myDid}
                   recipientId={formik.values.recipientID}
+                  signedObj={signedObj}
                 />
               )}
 

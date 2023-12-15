@@ -47,10 +47,12 @@ export const useSignCredential = () => {
           subjectDid: recipientDID, kid: vcSigner.keyId, 
           alg: vcSigner.algorithm, signer: vcSigner.sign
         }
-
         const ClassInstance = createDynamicClass(className, properties)
-        const createCredential = VerifiableCredential.create(title, web5Object.connectedDid, recipientDID, new ClassInstance())
-        const signedVc = await createCredential.sign(signOptions)
+        const createdCredential = VerifiableCredential.create(
+          title, web5Object.connectedDid, 
+          recipientDID, new ClassInstance()
+        )
+        const signedVc = await createdCredential.sign(signOptions)
 
         let vcObject = {
            "@type": "vc", vc: signedVc, 

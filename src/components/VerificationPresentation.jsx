@@ -2,6 +2,8 @@
 // import {useState} from 'react'
 
 export const VerificationPresentation = ({ myDid, obj, title, recipientId, setObj, signedObj }) => {
+// TODO: signedObj - will only take effect in the create page
+// The delete button will only be revealed in the create page
 
   return (
     <section

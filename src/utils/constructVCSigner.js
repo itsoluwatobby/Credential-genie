@@ -1,27 +1,21 @@
 import { utils as didUtils } from '@web5/dids';
 import { PresentationExchange } from '@web5/credentials';
-import { Jose } from '@web5/crypto';
 
 export const initAppState = { isLoading: false, isError: false, error: '', isSuccess: false, success: '' }
+export const initSignedObj = { signed: false, author: '', recipient: '', title: '', obj: {} }
 export const constructVCSigner = async(authorDid, web5Object) => {
   try{
     const signedKeyId = await web5Object.agent.didManager.getDefaultSigningKey({ did: authorDid })
     if(!signedKeyId) throw new Error ({ error: 'VCManager: Unable to determine signing key id for author: ' + authorDid.substring(0,15) })
-  
-    // DID keys stored in KeyManager use the canonicalId as an alias, so
-    // normalize the signing key ID before attempting to retrieve the key
     const parseDid = didUtils.parseDid({ didUrl: signedKeyId })
     if(!parseDid) throw new Error ({ error: `DidIonMethod: Unable to parse DID: ${signedKeyId}` })
 
     const normalizedDid = parseDid.did.split(':', 3).join(':');
     const normalizedSigningKeyId = `${normalizedDid}#${parseDid.fragment}`;
     const signingKey = await web5Object.agent.keyManager.getKey({ keyRef: normalizedSigningKeyId });
-    const { alg } = Jose.webCryptoToJose(signingKey.privateKey.algorithm)
-    if (alg == undefined) return { error: `No algorithm provided to sign with keyID: ${signedKeyId}` }
-    
     return {
       keyId       : signedKeyId,
-      algorithm   : alg,
+      algorithm   : signingKey.privateKey.algorithm.name,
       sign        : async (content) => {
         return await web5Object.agent.keyManager.sign({ 
           algorithm   : signingKey.privateKey.algorithm,
