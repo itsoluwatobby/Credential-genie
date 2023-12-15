@@ -42,6 +42,14 @@ const Header = () => {
               >
                 Verify a Credential
               </Button>
+              <Button
+                onClick={() => navigate('/credentials')}
+                variant="outline"
+                size="md"
+                colorScheme="primary"
+              >
+                View Signed Credentials
+              </Button>
             </div>
           </article>
 

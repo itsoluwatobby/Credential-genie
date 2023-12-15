@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { VerifiableCredential } from '@web5/credentials';
-// import { transporter, mailOptions } from '../utils/sendEmail'
 import protocolDefinition from '../utils/protocolDefinition.json'
 import { initAppState, camelCase, constructVCSigner, createDynamicClass } from '../utils/constructVCSigner';
 
 export const useSignCredential = () => {
   const [appState, setAppState] = useState(initAppState)
 
-  const signCredential = async({ recipientDID, web5Object, email, title, properties }) => {
+  const signCredential = async({ recipientDID, web5Object, email, title, properties, option }) => {
     void(email)
     let storedSignedVC = ''
     const className = camelCase(title)
@@ -69,21 +68,27 @@ export const useSignCredential = () => {
         if(record.id) {
           const savedSignedVC = await record.data.json()
           storedSignedVC = savedSignedVC
-          const { status: sentStatus } = await record.send(recipientDID)
-          if(sentStatus.code == 202) {
-            // TODO: Implement sending emails here
-            setAppState(prev => ({...prev, isSuccess: true, success: 'Sent!'}))
-            resendIfFailed.className === className ? localStorage.removeItem(className) : null
+          if (option === 'Third party') {
+            const { status: sentStatus } = await record.send(recipientDID)
+            if(sentStatus.code == 202) {
+              // TODO: Implement sending emails here
+              setAppState(prev => ({...prev, isSuccess: true, success: 'Vc signed and sent to recipient!'}))
+              resendIfFailed.className === className ? localStorage.removeItem(className) : null
+              vcObject = {}
+            }
+            else {
+              const savedRecord = { recordId: record.id, recipientDID: recipientDID.substring(0,15) }  
+              resendIfFailed.className === className ? 
+              null : localStorage.setItem(className, JSON.stringify(savedRecord))
+              throw new Error('Error sending signed VC to Recipient')
+            }
+          }
+          else if (option === 'Self') {
+            setAppState(prev => ({...prev, isSuccess: true, success: 'VC created and Signed'}))
             vcObject = {}
           }
-          else {
-            const savedRecord = { recordId: record.id, recipientDID: recipientDID.substring(0,15) }  
-            resendIfFailed.className === className ? 
-            null : localStorage.setItem(className, JSON.stringify(savedRecord))
-            throw new Error('Error sending signed VC to Recipient')
-          }
         }
-        else throw new Error('Error saving signed VC to your DWN')
+        else throw new Error('Error saving signed VC to your Storage')
       }
       return { title: title, signedVc: storedSignedVC }
     }
