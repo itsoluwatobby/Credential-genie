@@ -93,6 +93,18 @@ const Navbar = () => {
                   <Link to={item.path}>{item.label}</Link>
                 </li>
               ))}
+              <Button
+                variant="fill"
+                size="lg"
+                onClick={() => {
+                  copyDID();
+                  toast.success('DID Copied');
+                }}
+                colorScheme="primary"
+                rightIcon={<IoClipboard />}
+              >
+                Copy Your DID
+              </Button>
             </ul>
           )}
         </div>

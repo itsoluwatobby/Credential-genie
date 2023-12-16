@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Toaster } from 'react-hot-toast';
@@ -8,6 +8,8 @@ import Create from './pages/create';
 import Verify from './pages/verify';
 import NotFound from './pages/NotFound';
 import LandingPage from './pages/landingPage';
+import { Credentials } from './pages/Credentials';
+
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path="/create" element={<Create />} />
-        {/* <Route path="/verify" element={<Verify />} /> */}
+        <Route path="/verify" element={<Verify />} />
+        <Route path="/credentials" element={<Credentials />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

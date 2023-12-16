@@ -5,18 +5,19 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import usePageTitle from '../hooks/usePageTitle';
 import { useSignCredential } from '../hooks/useSignCredential';
-// import { toast } from 'react-toastify';
 import toast from 'react-hot-toast';
 import { useCredentialContext } from '../context/useCredentialContext';
 import { useState } from 'react';
 import { VerificationPresentation } from '../components/VerificationPresentation';
-import VCCard from '../components/common/VCCard';
+import { initSignedObj } from '../utils/constructVCSigner';
+// import VCCard from '../components/common/VCCard';
 
 const Create = () => {
   const { webConnect } = useCredentialContext();
   const [attributes, setAttributes] = useState({ key: '', value: '' });
   const [obj, setObj] = useState({});
   const { appState, signCredential } = useSignCredential();
+  const [signedObj, setSignedObj] = useState(initSignedObj);
 
   const { key, value } = attributes;
   const { isLoading, isError, error, isSuccess, success } = appState;
@@ -40,10 +41,7 @@ const Create = () => {
     }),
     onSubmit: async (values) => {
       // Handle form submission logic here
-
-      if (webConnect.myDid === values.recipientID)
-        return toast.error('You can use your own DID for now!');
-
+      if(!Object.entries(obj).length) return
       const result = await signCredential({
         web5Object: webConnect.web5,
         email: values.recipientEmail,
@@ -51,10 +49,19 @@ const Create = () => {
         title: values.title,
         purpose: values.applyingFor,
         properties: obj,
+        option: values.applyingFor,
       });
 
-      if (isSuccess) return toast.success(result);
-      if (isError) return toast.error(error);
+      if (isSuccess) {
+        setSignedObj({
+          signed: true, author: webConnect.web5.connectedDid,
+          recipient: values.recipientID, title: values.title,
+          obj
+        })
+        setObj({})
+        return toast.success(result)
+      }
+      else if (isError) return toast.error(error);
     },
   });
 
@@ -247,8 +254,10 @@ const Create = () => {
               {formik.values.title && formik.values.recipientID && (
                 <VerificationPresentation
                   title={formik.values.title}
-                  obj={obj}
+                  obj={obj} setObj={setObj}
+                  myDid={webConnect.myDid}
                   recipientId={formik.values.recipientID}
+                  signedObj={signedObj}
                 />
               )}
 
